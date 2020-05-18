@@ -1,0 +1,119 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+
+\title{MAC0460 - Introdução ao aprendizado de máquina\\Lista 1}
+\author{Felipe Castro de Noronha\\NUSP: 10737032}
+\date{}
+
+\begin{document}
+\maketitle
+
+\subsection*{Questão 1}{
+    O diagrama abaixo mostra os componentes que participam no processo de aprendizado, em termos de aprendizado de maquina. Onde cada um contribui para gerar uma função que aproxima uma \emph{função alvo}. Podemos descrever cada bloco da seguinte maneira:
+    \begin{itemize}
+        \item Uma \emph{função alvo desconhecida} $ f: X \rightarrow Y $ que \emph{gera} todos os exemplos de treinamento. É a função que queremos aproximar.
+        \item Um conjunto de \emph{exemplos de treinamento}. São as observações que temos do mundo para podermos treinar nossa hipotese. Essas observações são da forma $ (x_{i}, y_{i} = f(x_{i})) $ onde $ x_{i} \in \mathbb{R}^{d} $.
+        \item Um \emph{espaço de hipoteses} $ \mathcal{H} $ que representa uma abstração de todas as possiveis funções que nosso algoritmo pode gerar. Chamamos de hipotese um elemento $ h \in \mathcal{H} $.
+        \item Um \emph{algoritmo de aprendizado} $ \mathcal{A} $ que, a partir dos exemplos de treinamento, gera uma função que aproxima $ f $. Diversos algoritmos podem ser usados aqui, como o \emph{perceptron}, \emph{regressão linear}, \emph{regressão logistica} entre outros. A escolha do algoritmo a ser utilizado se da de acordo com a necessidade.
+        \item Uma \emph{hipotese final} $ g $ que aproxima $ f $. Essa hipotese é o resultado de nosso algoritmo de aprendizado, a partir dela, podemos obter novos resultados de acordo com novas observações do mundo, e esses resultados se aproximam ao esperado caso fossem calculados com a função $ f $.
+    \end{itemize}
+}
+
+\subsection*{Questão 2}{
+    O $ E_{in} $, \emph{in sample error}, é o erro obtido a partir dos exemplos de treinamento, isto é, é uma medida para dar a ideia entre a diferença dos resultados calculados por $ f $ e $ g $. Já $ E_{out} $, \emph{out of sample error}, é o erro calculado a partir de um conjunto de dados que não estava nos exemplos de treinamento, é uma métrica de quão bem nosso treinamento generalizou para um conjunto de dados não visto até então.
+
+    Uma situação para explicarmos um exemplo é a seguintes: imagine que somos um banco que oferecemos empréstimos á nossos clientes. Para isso, temos varias informações sobre o mesmo, como: idade, sexo, movimentação mensal na conta, valor em bens, etc. Todas essas informações formam um $ x_i $. Podemos colocar todas esses $ x_i $ e os respectivos valores liberados para empréstimo por gerentes humanos ($y_i$) nos anos anteriores no nosso conjunto de exemplos de treinamento.
+
+    No cenário acima, a diferença entre os valores liberados por gerentes humanos e nossa hipotese $ g $, para os dados de anos anteriores, seria o $ E_{in} $, essa diferença é normalmente calculada pelo \emph{erro quadrático médio}. E o $ E_{out} $ poderia ser obtido de maneira semelhante, porém, agora, com dados de novos pedidos de empréstimos, que não foram usados para treinamento.
+}
+
+\subsection*{Questão 3}{
+    Pois minimizar o $ E_{in} $ não é suficiente para dizermos que nosso algoritmo é bom, em particular, podemos gerar uma hipotese que não é uma boa generalização do mundo, isto é, ela se mostra muito precisa com os dados do conjunto de treinamento, porém, não tem uma performance tão boa com dados do mundo real.
+
+    Inclusive, podemos ter o problema do \emph{over fitting}, onde nossa hipotese se ajusta tanto ao conjunto de treinamento que a avaliação de $ E_{out} $ se torna ainda pior, pois essa hipotese se tornou ainda menos geral.
+
+    Minimizar o $ E_{in} $ pode ser suficiente quando a função que queremos explorar é muito simples.
+}
+
+\subsection*{Questão 4}{
+    Esse valor nos mostra a diferença de performance da nossa hipotese entre os dados de treinamento e os dados de mundo real. Podemos dizer que, quanto maior este valor, menos precisa/previsivel é nossa hipotese. Alguns chamam esse valor de \emph{erro de generalização}.
+}
+
+\subsection*{Questão 5}{
+    Uma hipotese é uma função $ g $ que aproxima $ f $ (função alvo). A hipotese é gerada por um algoritmo de aprendizado.
+}
+
+\subsection*{Questão 6} {
+    Essa desigualdade pode ser lida como a \emph{probabilidade do erro calculado não ser uma boa aproximação para a qualidade da hipotese, dada uma certa tolerância, uma hipotese e o numero de observações no conjunto de treinamento}. Ela nos dá uma ideia da qualidade de generalização da hipotese.
+}
+
+\subsection*{Questão 7} {
+    A diferença em que essa desigualdade tem outro fator contribuinte, o $ M $, isto é, o numero de hipoteses de $ \mathcal{H} $. Ela nos dá um pouco mais de generalidade na analise do erro, fazendo com que nossa probabilidade diga a respeito de todo o espaço de hipoteses.
+}
+
+\subsection*{Questão 8} {
+    Podemos entender \emph{union bound} como um aproximação da probabilidade da disjunção de vários eventos. Com isso, podemos obter que $ \mathbb{P}[e_1 \vee e_2 \vee \cdots \vee e_n] \le \sum_{i=1}^{n}\mathbb{P}[e_i] $.
+}
+
+\subsection*{Questão 9} {
+    Para definir uma dicotomia precisamos de um espaço de hipoteses e um conjunto de observações. Assim, dado $ h \in \mathcal{H} $, temos que o conjunto $ \{h(x_1), h(x_2),..., h(x_n)\} $ é uma dicotomia, ou seja, uma dicotomia é o conjunto de valores gerados por uma hipotese. 
+
+    Uma observação importante é que uma hipotese só gera uma dicotomia, mas uma dicotomia pode ser gerada por varias hipoteses. Logo, as dicotomias podem nos dar uma noção do tamanho pratico do espaço de hipoteses.
+}
+
+\subsection*{Questão 10} {
+    A \emph{função de crescimento} $ m_{\mathcal{H}}(N) $ nos diz o numero máximo de dicotomias que podem ser geradas a partir de um espaço de hipoteses $ \mathcal{H} $ usando $ N $ pontos/observações. Segue que $ m_{\mathcal{H}}(N) \le 2^{N} $, porém, esse limite pode ser ainda menor quando usamos a ideia de \emph{break points}.
+}
+
+\subsection*{Questão 11} {
+    As dicotomias, e consequentemente, as funções de crescimento, nos dão uma ideia do tamanho do espaço de hipoteses, levando o numero de pontos do meu conjunto de treinamento. Isso é útil para fazermos uma melhor estimativa do erro.
+}
+
+\subsection*{Questão 12} {
+    Provando que a função de crescimento é polinomial nos permite fazer a substituição de $ M $ por $ m_{\mathcal{H}}(N) $ na formula $ \sqrt{\frac{1}{2N} \ln(\frac{2m_{\mathcal{H}}(N)}{\delta})} $ que constitui uma avaliação útil do \emph{generalization bound}.   
+}
+
+%\subsection*{Questão 13} {}
+
+\subsection*{Questão 14} {
+    Primeiramente, sabemos que se $ m_{\mathcal{H}}(N) < 2^k $ então $ m_{\mathcal{H}}(N) \le \sum^{k-1}_{i = 0}\binom{N}{i} $. Um de $k$ em que isso acontece é chamado de \emph{break point}. 
+
+    Além disso, temos que a \emph{VC dimension} de um espaço de hipoteses $\mathcal{H}$ é o valor $ d_{vc}(\mathcal{H}) $, que representa o maior $N$ tal que $ m_{\mathcal{H}}(N) = 2^N $. Se $\mathcal{H}$ não possui um break point então $d_{vc}(\mathcal{H}) = \infty$.
+
+    Com isso temos que a \emph{VC dimension} nos permite saber até onde $ m_{\mathcal{H}}(N) $ tem crescimento exponencial, e, com isso, conseguimos ter uma outra aproximação, em termos de crescimento, do nosso espaço de hipoteses.
+}
+
+\subsection*{Questão 15} {
+    O valor $d_{vc}$ de um perceptron d-dimensional é $d+1$.
+
+    A primeira coisa necessaria para a demonstração é mostrar que um perceptron d-dimensional pode dividir $d+1$ pontos de todas as maneiras possiveis, ou seja, de $ 2^{d+1} $ maneiras diferentes. Logo, $ d_{vc} $ do perceptron é pelo menos $ d+1 $.
+
+    O segundo, e ultimo passo, é que o perceptron falha em gerar todas as possiveis dicotomias para $ d+2 $ pontos, e logo, aqui, estariamos estabelecendo um limitante superior para $d_{vc}$.
+}
+
+\subsection*{Questão 16} {
+    Pelo fato de que o \emph{VC dimension} nos da informações sobre o \emph{break point} da função de crescimento, podemos dizer que quanto menor o valor $ d_{vc} $ menor a ordem da nossa função de crescimento, com isso, nosso \emph{generalization bound} fica menor, o que resulta em uma aproximação/hipotese de melhor qualidade.
+}
+
+\subsection*{Questão 17} {
+    Esse é o chamado \emph{generalization bound} e nos define um limite para o valor que $ E_{out} $ pode assumir. Com isso, temos a seguinte expressão $ E_{out} \le E_{in} + \sqrt{ \frac{8}{N} ln(\frac{ 4((2N)^{d_{vc}}+1) }{\delta})} $.
+}
+
+%\subsection*{Questão 18} {}
+
+%\subsection*{Questão 19} {}
+
+\subsection*{Questão 20} {
+    Pois podemos ter o cenário onde temos um alto valor de $ E_{in} $ e $ E_{out} $, logo, podemos ter criado uma hipotese que não seja boa para o conjunto de treinamento e nem seja geral, porém, se se os erros observados fossem próximos, poderíamos ter um $\epsilon$ pequeno. Logo, essa desigualdade não seria muito suficiente para avaliarmos a qualidade de $h$.
+}
+
+%\subsection*{Questão 21} {}
+
+\subsection*{Questão 22} {
+    Acredito que a principal ideia a ser tomada é que $ d_{vc} $ nos da uma ideia geral de até que ponto nosso espaço de hipoteses é, de fato, exponencial. Com isso, conseguimos ser mais precisos á respeito das estimativas de erros calculadas, além de que, agora, temos mais noção do que esses resultados significam.
+}
+
+\end{document}
