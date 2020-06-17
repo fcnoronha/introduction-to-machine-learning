@@ -6,5 +6,6 @@
         "markdown",
         "plaintext",
         "latex"
-    ]
+    ],
+    "python.pythonPath": ".ml-env/bin/python"
 }

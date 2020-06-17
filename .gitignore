@@ -1,1 +1,3 @@
-*course.pdf
+*.pdf
+.ml-env
+.vscode
